@@ -1,2 +1,2 @@
-/target/
-.env
+/mix-alchemy/target/
+/mix-alchemy/.env
