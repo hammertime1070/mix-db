@@ -1,25 +1,23 @@
 #[macro_use]
 extern crate rocket;
 
-use diesel::prelude::*;
 use rocket::{Build, Rocket};
-use rocket::serde::json::Json;
-
-use self::models::*;
-use self::schema::materials::dsl::*;
 
 mod database;
 mod models;
 mod schema;
-
-#[get("/")]
-fn index() -> Json<Vec<Material>> {
-    let connection = &mut database::establish_connection();
-    materials.load::<Material>(connection).map(Json).expect("'Error loading materials")
-}
+mod controller;
 
 #[launch]
 fn rocket() -> Rocket<Build> {
-    rocket::build().mount("/", routes![index])
+    rocket::build().mount("/", routes![
+        controller::list_materials,
+        controller::add_material,
+        controller::list_mix_designs,
+        controller::create_mix_design,
+        controller::add_material_to_mix,
+        controller::get_mix_materials,
+        controller::get_pivot_data,
+    ])
 }
 

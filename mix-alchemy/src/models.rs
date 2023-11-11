@@ -1,7 +1,9 @@
-use diesel::prelude::Queryable;
-use rocket::serde::Serialize;
+use diesel::prelude::*;
+use rocket::serde::{Serialize, Deserialize};
 use chrono::NaiveDateTime;
 use bigdecimal::BigDecimal;
+
+use crate::schema::{materials, mix_designs, match_mix_materials};
 
 #[derive(Serialize, Queryable)]
 #[serde(crate = "rocket::serde")]
