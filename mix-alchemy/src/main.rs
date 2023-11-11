@@ -7,6 +7,8 @@ mod database;
 mod models;
 mod schema;
 mod controller;
+mod templates;
+mod web;
 
 #[launch]
 fn rocket() -> Rocket<Build> {
@@ -18,6 +20,7 @@ fn rocket() -> Rocket<Build> {
         controller::add_material_to_mix,
         controller::get_mix_materials,
         controller::get_pivot_data,
+        web::index,
     ])
 }
 

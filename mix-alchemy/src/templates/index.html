@@ -1,0 +1,23 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Concrete Mix Design App</h1>
+
+<!-- Form to Add a New Material -->
+<form hx-post="/api/materials" hx-target="#materials-list" hx-swap="outerHTML">
+    <input type="text" name="name" placeholder="Material Name">
+    <input type="text" name="category" placeholder="Category">
+    <button type="submit">Add Material</button>
+</form>
+
+<!-- List of Materials -->
+<div id="materials-list" hx-get="/api/materials" hx-trigger="load">
+    <!-- Materials will be loaded here -->
+</div>
+
+<!-- List of Mix Designs -->
+<div id="mix-designs-list" hx-get="/api/mix_designs" hx-trigger="load">
+    <!-- Mix Designs will be loaded here -->
+</div>
+{% endblock %}

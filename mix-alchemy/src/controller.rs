@@ -5,16 +5,38 @@ use rocket::serde::json::Json;
 use crate::database;
 use crate::models::*;
 use crate::schema::{materials, mix_designs, match_mix_materials};
+use rocket::response::content::Html;
 
-// List all materials
-#[get("/materials")]
-pub fn list_materials() -> Json<Vec<Material>> {
+// // List all materials
+// #[get("/materials")]
+// pub fn list_materials() -> Json<Vec<Material>> {
+//     let connection = &mut database::establish_connection();
+//     materials::table
+//         .load::<Material>(connection)
+//         .map(Json)
+//         .expect("Error loading materials")
+// }
+// Trying out htmx endpoint
+#[get("materials")]
+pub fn list_materials() -> Html<String> {
     let connection = &mut database::establish_connection();
-    materials::table
-        .load::<Material>(connection)
-        .map(Json)
-        .expect("Error loading materials")
+    let materials_result = materials::table.load::<Material>(connection);
+    match materials_result {
+        OK(materials) => {
+            let template = MaterialsTemplate { materials };
+            Html(template.render().unwrap_or_else(|_| "Error rendering materials".to_string()))
+        },
+        Err(_) => Html("Error loading materials".to_string()),
+    }
 }
+// TODO: Figure out how to actually set up the templates
+// Structurally I like the way this works
+// maybe a renderTemplate function that takes in an Option for a vector
+// and renders the template if it exists 
+// It would also need to take in a template as a parameter
+
+
+
 
 // Add a new material
 #[post("/materials", data = "<new_material>")]

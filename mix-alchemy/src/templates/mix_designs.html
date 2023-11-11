@@ -1,0 +1,26 @@
+<!-- templates/mix_designs.html -->
+<div id="mix-designs">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <!-- Add other headers as necessary -->
+            </tr>
+        </thead>
+        <tbody id="mix-designs-content">
+            {% for mix_design in mix_designs %}
+                {% include "mix_design.html" %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    
+    <!-- templates/mix_design.html -->
+    <tr id="mix-design-{{ mix_design.id }}">
+        <td>{{ mix_design.id }}</td>
+        <td>{{ mix_design.name }}</td>
+        <td>{{ mix_design.location }}</td>
+        <!-- Add other fields as necessary -->
+    </tr>
